@@ -319,7 +319,7 @@ def flip(x):
     else:
         is_cuda = False
         if x.is_cuda:
-            is_cuda = True
+            is_cuda = False
             x = x.cpu()
         x = x.numpy().copy()
         if x.ndim == 3:
@@ -334,7 +334,7 @@ def flip(x):
 
         x = torch.from_numpy(x.copy())
         if is_cuda:
-            x = x.cuda()
+            x = x.cpu()
         return x
 
 

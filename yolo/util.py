@@ -26,7 +26,7 @@ def convert2cpu(matrix):
     else:
         return matrix
 
-def predict_transform(prediction, inp_dim, anchors, num_classes, CUDA = True):
+def predict_transform(prediction, inp_dim, anchors, num_classes, CUDA = False):
     batch_size = prediction.size(0)
     stride =  inp_dim // prediction.size(2)
     grid_size = inp_dim // stride
@@ -57,8 +57,8 @@ def predict_transform(prediction, inp_dim, anchors, num_classes, CUDA = True):
     y_offset = torch.FloatTensor(b).view(-1,1)
     
     if CUDA:
-        x_offset = x_offset.cuda()
-        y_offset = y_offset.cuda()
+        x_offset = x_offset.cpu()
+        y_offset = y_offset.cpu()
     
     x_y_offset = torch.cat((x_offset, y_offset), 1).repeat(1,num_anchors).view(-1,2).unsqueeze(0)
     
@@ -68,7 +68,7 @@ def predict_transform(prediction, inp_dim, anchors, num_classes, CUDA = True):
     anchors = torch.FloatTensor(anchors)
     
     if CUDA:
-        anchors = anchors.cuda()
+        anchors = anchors.cpu()
     
     anchors = anchors.repeat(grid_size*grid_size, 1).unsqueeze(0)
     prediction[:,:,2:4] = torch.exp(prediction[:,:,2:4])*anchors
@@ -223,7 +223,7 @@ Created on Sat Mar 24 00:12:16 2018
 @author: ayooshmac
 """
 
-def predict_transform_half(prediction, inp_dim, anchors, num_classes, CUDA = True):
+def predict_transform_half(prediction, inp_dim, anchors, num_classes, CUDA = False):
     batch_size = prediction.size(0)
     stride =  inp_dim // prediction.size(2)
 
@@ -251,8 +251,8 @@ def predict_transform_half(prediction, inp_dim, anchors, num_classes, CUDA = Tru
     y_offset = torch.FloatTensor(b).view(-1,1)
     
     if CUDA:
-        x_offset = x_offset.cuda().half()
-        y_offset = y_offset.cuda().half()
+        x_offset = x_offset.cpu().half()
+        y_offset = y_offset.cpu().half()
     
     x_y_offset = torch.cat((x_offset, y_offset), 1).repeat(1,num_anchors).view(-1,2).unsqueeze(0)
     
@@ -262,7 +262,7 @@ def predict_transform_half(prediction, inp_dim, anchors, num_classes, CUDA = Tru
     anchors = torch.HalfTensor(anchors)
     
     if CUDA:
-        anchors = anchors.cuda()
+        anchors = anchors.cpu()
     
     anchors = anchors.repeat(grid_size*grid_size, 1).unsqueeze(0)
     prediction[:,:,2:4] = torch.exp(prediction[:,:,2:4])*anchors

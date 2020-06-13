@@ -1,9 +1,8 @@
-torch==0.4.0
-torchvision==0.2.0
-visdom
-nibabel
-pandas
-tqdm
-matplotlib
-opencv-python
-ntpath
+torch== 1.4.0+cpu
+torchvision==0.5.0+cpu
+visdom==0.1.8.9
+nibabel==3.1.0
+pandas==1.0.4
+tqdm==4.46.1
+matplotlib==3.2.1
+opencv-python==4.2.0.34
