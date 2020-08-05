@@ -4,8 +4,6 @@ A CPU only build of AlphaPose, based on Ubuntu 20.04.
 # Build
 
 ```
-# download duc_se.pth and yolov3-spp.weights to this directory...
-
 docker build . --tag alphapose-cpu
 ```
 

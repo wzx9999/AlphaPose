@@ -42,12 +42,13 @@ if __name__ == "__main__":
     (fourcc,fps,frameSize) = data_loader.videoinfo()
 
     # Load detection loader
-    print('Loading YOLO model..')
+    print('Loading detection loader - YOLO model..')
     sys.stdout.flush()
     det_loader = DetectionLoader(data_loader, batchSize=args.detbatch).start()
     det_processor = DetectionProcessor(det_loader).start()
     
     # Load pose model
+    print('Loading pose model..')
     pose_dataset = Mscoco()
     if args.fast_inference:
         pose_model = InferenNet_fast(4 * 1 + 1, pose_dataset)
@@ -66,6 +67,7 @@ if __name__ == "__main__":
     save_path = os.path.join(args.outputpath, 'AlphaPose_'+ntpath.basename(videofile).split('.')[0]+'.avi')
     writer = DataWriter(args.save_video, save_path, cv2.VideoWriter_fourcc(*'XVID'), fps, frameSize).start()
 
+    print('Processing frames..')
     im_names_desc =  tqdm(range(data_loader.length()))
     batchSize = args.posebatch
     for i in im_names_desc:

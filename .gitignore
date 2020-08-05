@@ -26,4 +26,7 @@ images
 *.zip
 *.weights
 
+indir/
+outdir/
+
 coco-minival/
